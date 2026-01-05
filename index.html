@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub Validation System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="video-bg">
+        <div class="gradient-overlay"></div>
+    </div>
+
+    <main class="dashboard">
+        <!-- Sidebar Navigation (Categories) -->
+        <aside class="sidebar glass-effect">
+            <div class="brand">
+                <i data-lucide="ticket" class="brand-icon"></i>
+                <h2>EventHub</h2>
+            </div>
+
+            <nav class="categ-nav">
+                <h3>Database Tiket</h3>
+                <ul id="categoryList">
+                    <li class="active" onclick="filterTickets('all')">
+                        <i data-lucide="layers"></i> Semua Tiket
+                    </li>
+                    <li onclick="filterTickets('sold')">
+                        <i data-lucide="check-circle-2"></i> Siap Pakai
+                        <span class="badge-count" id="count-sold">0</span>
+                    </li>
+                    <li onclick="filterTickets('used')">
+                        <i data-lucide="history"></i> Sudah Dipakai
+                        <span class="badge-count" id="count-used">0</span>
+                    </li>
+                    <li onclick="filterTickets('available')">
+                        <i data-lucide="shopping-bag"></i> Belum Terjual
+                        <span class="badge-count" id="count-available">0</span>
+                </ul>
+
+                <div class="theory-box">
+                    <h4>Engine Status</h4>
+                    <p class="engine-status"><span class="pulse-dot"></span> NFA Core Active</p>
+                    <small>Logic controlled by ε-move automata</small>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <section class="main-content">
+            <!-- APP VIEW -->
+            <div id="appView">
+                <!-- Header & Scanner Section -->
+                <div class="top-section">
+                    <div class="scanner-container glass-effect">
+                        <div class="scan-header">
+                            <h1>Gate Validator</h1>
+                            <div class="live-status" id="processStatus">
+                                <i data-lucide="wifi"></i> SYSTEM READY
+                            </div>
+                        </div>
+
+                        <div class="scan-body">
+                            <div class="input-wrapper">
+                                <input type="text" id="ticketInput" placeholder="Scan / Input Kode Tiket..."
+                                    autocomplete="off">
+                                <button id="scanBtn" class="scan-btn">
+                                    VALIDASI
+                                    <i data-lucide="scan-line"></i>
+                                </button>
+                            </div>
+
+                            <!-- Visual Process Indicator (Hidden NFA States) -->
+                            <div class="process-steps">
+                                <div class="p-step active" id="step-standby">
+                                    <div class="p-icon"><i data-lucide="monitor"></i></div>
+                                    <span>Standby</span>
+                                </div>
+                                <div class="p-line"></div>
+                                <div class="p-step" id="step-processing">
+                                    <div class="p-icon"><i data-lucide="cpu"></i></div>
+                                    <span>Processing</span>
+                                </div>
+                                <div class="p-line"></div>
+                                <div class="p-step" id="step-result">
+                                    <div class="p-icon"><i data-lucide="shield-check"></i></div>
+                                    <span>Result</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Card -->
+                    <div id="resultCard" class="result-card glass-effect hidden">
+                        <div class="result-icon-box">
+                            <!-- Icon injected by JS -->
+                        </div>
+                        <div class="result-text">
+                            <h2 id="resTitle">ACCESS GRANTED</h2>
+                            <p id="resDesc">Tiket Valid. Silakan masuk.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Grid -->
+                <div class="ticket-grid-section">
+                    <div class="section-header">
+                        <h3>Data Tiket Real-time</h3>
+                        <div class="search-sort">
+                            <input type="text" id="dbSearch" placeholder="Cari data..." onkeyup="searchDatabase()">
+                        </div>
+                    </div>
+
+                    <div class="ticket-table-wrapper glass-effect">
+                        <table class="ticket-table">
+                            <thead>
+                                <tr>
+                                    <th>Kode Tiket</th>
+                                    <th>Kategori</th>
+                                    <th>Status</th>
+                                    <th>Log Waktu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketTableBody">
+                                <!-- Rows injected by JS -->
+                            </tbody>
+                        </table>
+                        <div id="emptyState" class="empty-state hidden">
+                            <i data-lucide="search-x"></i>
+                            <p>Data tidak ditemukan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
